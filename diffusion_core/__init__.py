@@ -1,2 +1,0 @@
-from .diffusion_models import diffusion_models_registry
-from .diffusion_schedulers import diffusion_schedulers_registry

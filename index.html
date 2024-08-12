@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Guide-and-Rescale: Self-Guidance Mechanism for Effective Tuning-Free Real Image Editing">
+    <meta name="keywords" content="Guide-and-Rescale, Text-to-Image, diffusion model, artificial intelligence, computer vision">
+    <title>Guide-and-Rescale: Self-Guidance Mechanism for Effective Tuning-Free Real Image Editing</title>
+    
+    <!-- Preload fonts -->
+    <link rel="preload" href="/assets/Inter/Inter-Medium.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/assets/Inter/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/back-button.css">
+    <link rel="stylesheet" href="css/menu.css">
+    
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script src="js/main.js" defer></script>
+    <script src="js/zoom.js" defer></script>
+    <script src="js/copy.js" defer></script>
+    <script src="js/back-button.js" defer></script>
+    <script src="js/menu.js" defer></script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+          inlineMath: [['$','$']]
+        }
+      });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript"></script>
+</head>
+<body>
+  <nav id="quick-access-menu">
+    <ul>
+      <li><a href="#buttons">Resources</a></li>
+      <li><a href="#abstract">Abstract</a></li>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#results">Results</a></li>
+      <li><a href="#bibtex">BibTeX</a></li>
+    </ul>
+  </nav>
+  
+
+  <header class="page-header">
+    <div class="header-content">
+        <h1 class="page-title">
+            <span class="title-highlight">Guide-and-Rescale:</span>
+            <span class="title-subtitle">Self-Guidance Mechanism for Effective Tuning-Free Real Image Editing</span>
+        </h1>
+    </div>
+</header>
+
+<section class="authors-section" style="margin-top: -70px;">
+    <div class="container">
+        <div class="authors-container" data-aos="fade-up" data-aos-duration="1000">
+            <div class="author">
+                <span class="author-name">Vadim Titov</span>
+                <span class="author-affiliations">
+                  <span class="author-icon"><img src="assets/images/AIRI - icon.svg" alt="AIRI icon"></span>
+                </span>
+            </div>
+            <div class="author">
+                <span class="author-name">Madina Khalmatova</span>
+                <span class="author-affiliations">
+                  <span class="author-icon"><img src="assets/images/UNSW Sydney logo.jpg" alt="UNSW icon"></span>
+                </span>
+            </div>
+            <div class="author">
+                <span class="author-name">Alexandra Ivanova</span>
+                <span class="author-affiliations">
+                  <span class="author-icon"><img src="assets/images/hse.png" alt="HSE icon"></span>
+                  <span class="author-icon"><img src="assets/images/AIRI - icon.svg" alt="AIRI icon"></span>
+                  <span class="author-icon"><img src="assets/images/Skoltech_Logo_Black.png" alt="Skol icon"></span>
+                </span>
+            </div>
+            <div class="author">
+                <span class="author-name">Dmitry Vetrov</span>
+                <span class="author-affiliations">
+                  <span class="author-icon"><img src="assets/images/constructor-university.png" alt="CU icon"></span>
+                </span>
+            </div>
+            <div class="author">
+                <span class="author-name">Aibek Alanov</span>
+                <span class="author-affiliations">
+                  <span class="author-icon"><img src="assets/images/hse.png" alt="HSE icon"></span>
+                  <span class="author-icon"><img src="assets/images/AIRI - icon.svg" alt="AIRI icon"></span>
+                </span>
+            </div>
+        </div>
+        
+        <div class="affiliations-container" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+          <div class="affiliations-column">
+            <div class="affiliation">
+              <div class="affiliation-icon">
+                <img src="assets/images/hse.png" alt="HSE icon">
+              </div>
+              <div class="affiliation-text">HSE University</div>
+            </div>
+            <div class="affiliation">
+              <div class="affiliation-icon">
+                <img src="assets/images/AIRI - icon.svg" alt="AIRI icon">
+              </div>
+              <div class="affiliation-text">AIRI - Artificial Intelligence Research Institute</div>
+            </div>
+            <div class="affiliation">
+              <div class="affiliation-icon">
+                <img src="assets/images/Skoltech_Logo_Black.png" alt="Skoltech icon">
+              </div>
+              <div class="affiliation-text">Skolkovo Institute of Science and Technology</div>
+            </div>
+          </div>
+          <div class="affiliations-column">
+            <div class="affiliation">
+              <div class="affiliation-icon">
+                <img src="assets/images/UNSW Sydney logo.jpg" alt="UNSW icon">
+              </div>
+              <div class="affiliation-text">UNSW Sydney</div>
+            </div>
+              <div class="affiliation">
+              <div class="affiliation-icon">
+                <img src="assets/images/constructor-university.png" alt="CU icon">
+              </div>
+              <div class="affiliation-text">Constructor University, Bremen</div>
+            </div>
+          </div>
+        </div>
+    </div>
+</section>
+
+
+    <!-- Main Navigation -->
+    <section class="container" id="buttons" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <ul class="nav nav-pills nav-justified" style="margin-top: 30px; margin-bottom: 30px;">
+                    <li class="nav-item" style="margin: 0 10px;">
+                        <a href="" class="nav-link custom-nav-link" style="display: flex; flex-direction: column; align-items: center;">
+                            <img src="assets/images/arxiv_logo.png" height="80px" alt="Paper Icon">
+                            <h4 style="margin-top: 10px; font-size: 1.2em;"><strong>Paper</strong></h4>
+                        </a>
+                    </li>
+                    <li class="nav-item" style="margin: 0 10px;">
+                        <a href="https://github.com/AIRI-Institute/Guide-and-Rescale" target="_blank" class="nav-link custom-nav-link" style="display: flex; flex-direction: column; align-items: center;">
+                            <img src="assets/images/git_icon.png" height="80px" alt="GitHub Icon">
+                            <h4 style="margin-top: 10px; font-size: 1.2em;"><strong>Code</strong></h4>
+                        </a>
+                    </li>
+                    <li class="nav-item" style="margin: 0 10px;">
+                        <a href="https://huggingface.co/spaces/AIRI-Institute/Guide-and-Rescale" target="_blank" class="nav-link custom-nav-link" style="display: flex; flex-direction: column; align-items: center;">
+                            <img src="assets/images/spaces.png" height="80px" alt="Hugging Face Icon">
+                            <h4 style="margin-top: 10px; font-size: 1.2em;"><strong>HF Demo</strong></h4>
+                        </a>
+                    </li>
+                    <li class="nav-item" style="margin: 0 10px;">
+                        <a href="https://colab.research.google.com/drive/1noKOOcDBBL_m5_UqU15jBBqiM8piLZ1O?usp=sharing" target="_blank" class="nav-link custom-nav-link" style="display: flex; flex-direction: column; align-items: center;">
+                            <img src="assets/images/colab_icon.png" height="80px" alt="Colab Icon">
+                            <h4 style="margin-top: 10px; font-size: 1.2em;"><strong>Colab</strong></h4>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Image -->
+    <div class="image-container" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="400">
+        <img src="assets/images/teaser_image.png" width="1000px" class="zoomable diagram-image" alt="Guide-and-Rescale teaser">
+        <div class="image-caption">
+            The proposed <b>Guide-and-Rescale</b> method allows to manipulate images for a wide range of different editings. It achieves a good balance between quality of manipulation and preservation of the original image.
+        </div>
+    </div>
+
+    <!-- Abstract Section -->
+    <section class="abstract-section" id="abstract" data-aos="fade-in" data-aos-duration="1000" data-aos-delay="300">
+        <div class="hero-body">
+            <div class="container abstract-container">
+                <h1 class="abstract-title">Abstract</h1>
+                <p class="abstract-text">
+                Despite recent advances in large-scale text-to-image generative models, manipulating real images with these models remains a challenging problem. The main limitations of existing editing methods are that they either fail to perform with consistent quality on a wide range of image edits or require time-consuming hyperparameter tuning or fine-tuning of the diffusion model to preserve the image-specific appearance of the input image.
+                We propose a novel approach that is built upon a modified diffusion sampling process via the guidance mechanism. In this work, we explore the self-guidance technique to preserve the overall structure of the input image and its local regions appearance that should not be edited. In particular, we explicitly introduce layout-preserving energy functions that are aimed to save local and global structures of the source image. Additionally, we propose a noise rescaling mechanism that allows to preserve noise distribution by balancing the norms of classifier-free guidance and our proposed guiders during generation.
+                Such a guiding approach does not require fine-tuning the diffusion model and exact inversion process. As a result, the proposed method provides a fast and high-quality editing mechanism.
+                In our experiments, we show through human evaluation and quantitative analysis that the proposed method allows to produce desired editing which is more preferable by humans and also achieves a better trade-off between editing quality and preservation of the original image.                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section class="hero" id="overview"  data-aos="fade-in" data-aos-duration="1000" data-aos-delay="300">
+        <div class="hero-body">
+            <div class="container" style="max-width: 800px">
+                <h1 style="font-family: 'InterMedium', Arial, sans-serif;">Overview of Guide-and-Rescale</h1>
+                <p style="font-size: 17px; color: #444; margin-bottom: 0.1cm; font-family: 'InterRegular', Arial, sans-serif;">
+                First, our method uses a classic ddim inversion of the source real image. Then the method performs real image editing via classical denoising process. For every denoising step the noise term is modified by guider that utilizes latents $z_t$ from current generation process and time-aligned ddim latents $z^*_t$.                </p>
+            </div>
+        </div>
+    </section>
+    <center>
+        <div class="image-container" style="margin-top: -50px;"  data-aos="fade-in" data-aos-duration="1000" data-aos-delay="300">
+            <img src="assets/images/diagram.png" width="100%" class="zoomable diagram-image" loading="lazy">
+            <div class="image-caption"></div>
+        </div>
+    </center>
+
+    <!-- Results Section -->
+    <section class="hero" id="results" data-aos="fade-in" data-aos-duration="1000" data-aos-delay="300">
+        <div class="hero-body">
+            <div class="container" style="max-width: 800px">
+                <h1 style="font-family: 'InterMedium', Arial, sans-serif;">Guide-and-Rescale Results</h1>
+                  <div class="image-container" style="margin-top: 0px;" >
+                      <img src="assets/images/results.webp" width="100%" class="zoomable diagram-image" loading="lazy">
+                      <div class="image-caption"></div>
+                      <p style="text-align: justify; font-size: 17px; margin-top: 20px; font-family: 'InterRegular', Arial, sans-serif;">
+                      Visual comparison of our method with baselines over different types of editing. Our approach shows more consistent results than existing methods and achieves a better trade-off between editing quality and preservation of the structure of the original image.                    </p>
+                  </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BibTeX Section -->
+    <div class="bibtex-card" id="bibtex" data-aos="fade-in" data-aos-duration="1000" data-aos-delay="300">
+        <div class="bibtex-header">
+            <h2 class="bibtex-title">BibTeX</h2>
+            <button id="copy-button" class="copy-button">
+                <svg class="copy-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"></path>
+                    <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"></path>
+                </svg>
+                <span>Copy</span>
+            </button>
+        </div>
+        <pre id="bibtex-content" class="bibtex-content">
+          todo: add
+        </pre>
+    </div>
+
+    <!-- Footer -->
+    <footer class="hero">
+        <div class="hero-body">
+            <div class="container" style="width: 400px; text-align: center; margin-top: 50px;">
+                <a href="https://airi.net/" target="_blank">
+                    <img src="assets/images/AIRI - Full logo.svg" alt="AIRI - Artificial Intelligence Research Institute" style="max-width: 100%; height: 40px;">
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <button id="back-to-top" title="Back to top">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 15l-6-6-6 6"/>
+      </svg>
+    </button>
+</body>
+</html>
