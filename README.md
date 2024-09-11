@@ -38,7 +38,7 @@ We also provide [a jupyter notebook](example_notebooks/guide_and_rescale.ipynb) 
 </p>
 <p align="center">
   <br>
-    Overall scheme of the proposed method Guide-and-Rescale. First, our method uses a classic ddim inversion of the source real image. Then the method performs real image editing via classical denoising process. For every denoising step the noise term is modified by guider that utilizes latents $z_t$ from current generation process and time-aligned ddim latents $z^*_t$.
+    Overall scheme of the proposed method Guide-and-Rescale. First, our method uses a classic ddim inversion of the source real image. Then the method performs real image editing via the classical denoising process. For every denoising step the noise term is modified by guider that utilizes latents $z_t$ from current generation process and time-aligned ddim latents $z^*_t$.
 </p>
 
 
